@@ -1,0 +1,394 @@
+[gd_scene load_steps=13 format=3 uid="uid://d3niipd312egi"]
+
+[ext_resource type="Texture2D" uid="uid://ba18o3m5uhn58" path="res://Intro/intro4.jpg" id="1_qpdse"]
+[ext_resource type="AudioStream" uid="uid://c16fwilfkvfaw" path="res://music/music_player.wav" id="6_vtrk6"]
+
+[sub_resource type="GDScript" id="GDScript_bxisu"]
+script/source = "extends CanvasLayer
+
+
+@onready var animation_player: AnimationPlayer = $Control/AnimationPlayer
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var skip_button: Button = $Control/skip_button  
+
+const MUSIC_PATH = \"res://music/music_player.wav\"  
+const MENU_SCENE_PATH = \"res://Scenes/menu.tscn\" 
+
+func _ready() -> void:
+	# Verify nodes exist
+	if animation_player == null:
+		print(\"Error: AnimationPlayer node is null.\")
+		return
+
+	if audio_stream_player == null:
+		print(\"Error: AudioStreamPlayer node is null.\")
+		return
+
+	if skip_button == null:
+		print(\"Error: SkipButton node is null.\")
+		return
+
+	# Load and play music
+	load_and_play_music()
+
+
+	if not skip_button.is_connected(\"pressed\", Callable(self, \"_on_skips_pressed\")):
+		skip_button.connect(\"pressed\", Callable(self, \"_on_skips_pressed\"))
+		print(\"SkipButton signal connected successfully.\")
+
+
+	if not animation_player.is_connected(\"animation_finished\", Callable(self, \"_on_animation_player_animation_finished\")):
+		animation_player.connect(\"animation_finished\", Callable(self, \"_on_animation_player_animation_finished\"))
+		print(\"AnimationPlayer 'animation_finished' signal connected successfully.\")
+
+func load_and_play_music() -> void:
+	# Preload the music stream
+	var music_stream = preload(MUSIC_PATH)
+	if music_stream == null:
+		print(\"Error: Music file not found.\")
+		return
+
+
+	audio_stream_player.stream = music_stream
+	print(\"Music stream loaded successfully.\")
+
+	if not audio_stream_player.playing:
+		audio_stream_player.play()
+		print(\"Playing music...\")
+
+
+	audio_stream_player.connect(\"finished\", Callable(self, \"_on_music_finished\"))
+
+func _on_music_finished() -> void:
+
+	audio_stream_player.play()
+	print(\"Music restarted.\")
+
+func _on_skips_pressed() -> void:
+
+	print(\"Skip button pressed.\")
+	if audio_stream_player != null and audio_stream_player.playing:
+		audio_stream_player.stop()
+
+
+	transition_to_scene(MENU_SCENE_PATH)
+
+func transition_to_scene(scene_path: String) -> void:
+
+	if not ResourceLoader.exists(scene_path):
+		print(\"Error: Scene not found:\", scene_path)
+		return
+
+
+	get_tree().change_scene_to_file(scene_path)
+	print(\"Scene transitioned to:\", scene_path)
+
+
+func _on_skip_button_toggled(_button_pressed) -> void:
+
+	pass
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+
+	print(\"Animation finished:\", anim_name)
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cy724"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/zombie1.jpg-8c3207b02ea47f03fe68b4eb2e2b40ee.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6f18m"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/zombie3.jpg-31a7ac077098ac9517ee1ce99d799186.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_guvt3"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/zombie4.jpg-eeae6d8c081d0cde66ba0778658a3f21.ctex"
+
+[sub_resource type="Animation" id="Animation_dcmfm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scene1:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Scene2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Scene3:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Scene4:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("skip_button:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_u8i7c"]
+resource_name = "Scene1"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scene1:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("skip_button:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_senti"]
+resource_name = "Scene2"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scene2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cmtof"]
+resource_name = "Scene3"
+length = 14.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scene3:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 6, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Scene4:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(7, 8, 13, 14),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6qf8h"]
+_data = {
+"RESET": SubResource("Animation_dcmfm"),
+"Scene1": SubResource("Animation_u8i7c"),
+"Scene2": SubResource("Animation_senti"),
+"Scene3": SubResource("Animation_cmtof")
+}
+
+[sub_resource type="FontFile" id="FontFile_ikotq"]
+cache/0/20/0/ascent = 0.0
+cache/0/20/0/descent = 0.0
+cache/0/20/0/underline_position = 0.0
+cache/0/20/0/underline_thickness = 0.0
+cache/0/20/0/scale = 1.0
+cache/0/20/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/20/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/20/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[node name="Intro game" type="CanvasLayer"]
+script = SubResource("GDScript_bxisu")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Scene1" type="Control" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Scene1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_cy724")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Scene2" type="Control" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Scene2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qpdse")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Scene3" type="Control" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Scene3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_6f18m")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Scene4" type="Control" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/Scene4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_guvt3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+autoplay = "Scene1"
+libraries = {
+"": SubResource("AnimationLibrary_6qf8h")
+}
+
+[node name="skip_button" type="Button" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = SubResource("FontFile_ikotq")
+theme_override_font_sizes/font_size = 20
+text = "SKIP"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_vtrk6")
+
+[connection signal="animation_finished" from="Control/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="toggled" from="Control/skip_button" to="." method="_on_skip_button_toggled"]

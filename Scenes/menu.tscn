@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6lk3pmledujg"]
+
+[ext_resource type="FontFile" uid="uid://c5rl8fffm46xl" path="res://assets/Ubuntu-M.ttf" id="1_0h8iq"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="2_j8ms4"]
+[ext_resource type="Texture2D" uid="uid://cehcm7rdacys7" path="res://Intro/grunge-blood-splatter-background.jpg" id="2_nk7vj"]
+[ext_resource type="Script" path="res://scripts/button_2.gd" id="3_om6l1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8ecm"]
+bg_color = Color(0.517647, 0.556863, 0.94902, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.517647, 0.517647, 0.517647, 0.843137)
+shadow_size = 5
+shadow_offset = Vector2(3, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uic74"]
+bg_color = Color(0.486275, 0.588235, 0.992157, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.517647, 0.517647, 0.517647, 0.843137)
+shadow_size = 5
+shadow_offset = Vector2(3, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iecvm"]
+bg_color = Color(0.486275, 0.454902, 0.870588, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0.517647, 0.517647, 0.517647, 0.843137)
+shadow_size = 2
+shadow_offset = Vector2(2, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lq3ai"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 808.0
+offset_top = 71.0
+offset_right = 1104.0
+offset_bottom = 158.0
+theme_override_fonts/font = ExtResource("1_0h8iq")
+theme_override_font_sizes/font_size = 50
+text = "TEAM-TIGER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Label"]
+layout_mode = 0
+offset_left = -808.0
+offset_top = -71.0
+offset_right = 3192.0
+offset_bottom = 3929.0
+texture = ExtResource("2_nk7vj")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 742.0
+offset_top = 484.0
+offset_right = 1644.0
+offset_bottom = 921.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 200
+theme_override_styles/normal = SubResource("StyleBoxFlat_e8ecm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uic74")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iecvm")
+theme_override_styles/focus = SubResource("StyleBoxFlat_lq3ai")
+text = "
+Play
+"
+flat = true
+script = ExtResource("2_j8ms4")
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 716.0
+offset_top = 809.0
+offset_right = 1197.0
+offset_bottom = 933.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 90
+theme_override_styles/normal = SubResource("StyleBoxFlat_e8ecm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_uic74")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_iecvm")
+theme_override_styles/focus = SubResource("StyleBoxFlat_lq3ai")
+text = "	Quit"
+flat = true
+script = ExtResource("3_om6l1")
